@@ -1,19 +1,23 @@
 using UnityEngine;
 
-public class PlayerBattle : MonoBehaviour
-{
-
-    
-    public EntityHealth health;
-    public EntityStat stat;
-
-    [System.Serializable]
+[System.Serializable]
     public struct AttackRange
     {
         public Vector2 offset, size;
 
         public bool drawGizmos;
     }
+public class PlayerBattle : MonoBehaviour
+{
+
+    
+    public EntityHealth health;
+    
+    public EntityStat stat;
+
+    public float atkCool;
+
+    
     public AttackRange defaultAttack;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] LayerMask enemyMask;
@@ -23,9 +27,18 @@ public class PlayerBattle : MonoBehaviour
         stat = GetComponent<EntityStat>();
     }
 
+    void Update()
+    {
+        if (atkCool > 0) atkCool -= Time.deltaTime + (1 + stat.GetResultValue("atkSpeed")/100);
+    }
+
     // Update is called once per frame
     public void Attack()
     {
+        if (atkCool > 0)
+            return;
+        atkCool = 0.5f;
+
         var col = Physics2D.OverlapBoxAll((Vector2)transform.position + defaultAttack.offset,defaultAttack.size,0,enemyMask);
 
         foreach (var target in col)

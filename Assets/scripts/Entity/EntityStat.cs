@@ -22,6 +22,7 @@ public class EntityStat : MonoBehaviour
         public MathType mathType;
         public float Value;
     }
+    [System.Serializable]
     struct StatValue
     {
         public string Key;
@@ -39,11 +40,12 @@ public class EntityStat : MonoBehaviour
         new StatValue{ Key = "hurtDamage", Value=0 },
         new StatValue{ Key = "atkSpeed", Value = 0 },
         new StatValue{ Key = "moveSpeed", Value = 0 },
+        new StatValue{ Key = "atkCool", Value = 4},
     };
     //공격력, 방어력, 치명타 피해, 치명타 확률, 받는 피해 증가, 공격 속도, 이동 속도
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float attackDamage,defense, increaseDamage;
-    public float critPer, critMul, hurtDamage, atkSpeed, moveSpeed;
+    //public float attackDamage,defense, increaseDamage;
+    //public float critPer, critMul, hurtDamage, atkSpeed, moveSpeed;
 
     void Start()
     { 
@@ -83,4 +85,5 @@ public class EntityStat : MonoBehaviour
 
         return resultValue[key] = value * increase * 0.01f;
     }
+
 }
