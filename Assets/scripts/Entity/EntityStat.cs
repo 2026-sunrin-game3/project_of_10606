@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public enum MathType
 {
     Increase,
@@ -8,17 +7,14 @@ public enum MathType
     Add,
     Remove
 }
-
 public class EntityStat : MonoBehaviour
 {
     Dictionary<string, float> baseValue = new();
-
     Dictionary<string, float> resultValue = new();
-
-    public List<Buff> buffs = new();
-    public struct Buff
+    public List<Buf> bufs = new();
+    public struct Buf
     {
-        public string key;
+        public string Key;
         public MathType mathType;
         public float Value;
     }
@@ -28,62 +24,60 @@ public class EntityStat : MonoBehaviour
         public string Key;
         public float Value;
     }
-    
     [SerializeField]
     List<StatValue> defaultStat = new()
     {
-        new StatValue{ Key = "attackDamage", Value=3 },
-        new StatValue{ Key = "defense", Value=0 },
-        new StatValue{ Key = "increaseDamage", Value=0 },
-        new StatValue{ Key = "critPer", Value=0 },
-        new StatValue{ Key = "critMul", Value = 3},
-        new StatValue{ Key = "hurtDamage", Value=0 },
-        new StatValue{ Key = "atkSpeed", Value = 0 },
-        new StatValue{ Key = "moveSpeed", Value = 0 },
-        new StatValue{ Key = "atkCool", Value = 4},
+        new StatValue{Key="attackDamage", Value=3},
+        new StatValue{Key="defense", Value=0},
+        new StatValue{Key="increaseDamage", Value=0},
+        new StatValue{Key="critPer", Value=30},
+        new StatValue{Key="critMul", Value=0},
+        new StatValue{Key="hurtDamage", Value=0},
+        new StatValue{Key="atkSpeed", Value=0},
+        new StatValue{Key="moveSpeed", Value=0},
     };
-    //공격력, 방어력, 치명타 피해, 치명타 확률, 받는 피해 증가, 공격 속도, 이동 속도
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //public float attackDamage,defense, increaseDamage;
-    //public float critPer, critMul, hurtDamage, atkSpeed, moveSpeed;
 
     void Start()
-    { 
-
+    {
         foreach (StatValue val in defaultStat)
         {
             baseValue[val.Key] = val.Value;
             Calc(val.Key);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public float GetResultValue(string key)
     {
         return resultValue[key];
+    }
+    public float GetBaseValue(string key)
+    {
+        return baseValue[key];
     }
 
     public float Calc(string key)
     {
         float value = baseValue[key];
-        float increase = 100;
+        float increase = 120;
 
-        foreach (Buff buff in buffs)
+        foreach (Buf buf in bufs)
         {
-            switch (buff.mathType)
+            switch (buf.mathType)
             {
-                case MathType.Increase : increase -= buff.Value; break;
-                case MathType.Decrease: increase -= buff.Value; break;
-                case MathType.Add: value += buff.Value; break;
-                case MathType.Remove: value -= buff.Value; break;
+                case MathType.Increase:
+                    increase += buf.Value;
+                    break;
+                case MathType.Decrease:
+                    increase -= buf.Value;
+                    break;
+                case MathType.Add:
+                    value += buf.Value;
+                    break;
+                case MathType.Remove:
+                    value -= buf.Value;
+                    break;
             }
         }
 
         return resultValue[key] = value * increase * 0.01f;
     }
-
 }

@@ -1,23 +1,24 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public PlayerInput input;
     public PlayerMovement movement;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public PlayerAnimator animator;
+    public PlayerInput input;
     void Start()
     {
-        input = GetComponent<PlayerInput>();
         movement = GetComponent<PlayerMovement>();
+        input = GetComponent<PlayerInput>();
+        animator = GetComponent<PlayerAnimator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         movement.Move(input.axis);
+
+        animator.SetMoving(input.HasAxis(), input.axis);
     }
 }

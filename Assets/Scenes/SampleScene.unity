@@ -412,8 +412,11 @@ GameObject:
   - component: {fileID: 551116727}
   - component: {fileID: 551116728}
   - component: {fileID: 551116729}
-  m_Layer: 0
-  m_Name: "\uC5D4\uD2B8\uB9AC\uBD07 \uC815\uBA74_0"
+  - component: {fileID: 551116730}
+  - component: {fileID: 551116731}
+  - component: {fileID: 551116732}
+  m_Layer: 3
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,12 +498,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -398042887140614215, guid: 2ab01f5ab217e9f4d81c26bb15106769, type: 3}
+  m_Sprite: {fileID: -6217600168826927598, guid: 745242e5ce2440548824e33baa51bedf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.45, y: 4.31}
+  m_Size: {x: 3.125, y: 1.71875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -514,8 +517,8 @@ Transform:
   m_GameObject: {fileID: 551116719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -0.42, z: 0}
-  m_LocalScale: {x: 0.48208824, y: 0.48208824, z: 0.48208824}
+  m_LocalPosition: {x: 0.876, y: -0.399, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -532,8 +535,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f533d7eef02994285e6cc57ecc1a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  input: {fileID: 551116725}
   movement: {fileID: 551116724}
+  animator: {fileID: 0}
+  input: {fileID: 551116725}
 --- !u!114 &551116724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,12 +550,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db52d4b6199a36489d2d33b1a2a6b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  moveSpeed: 3
-  jumpPower: 30
+  jumpPower: 12
   groundMask_:
     serializedVersion: 2
     m_Bits: 128
-  groundDist_: 1.2
+  groundDist_: 0.35
 --- !u!114 &551116725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,17 +632,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0044316202, y: 0.4090559}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.45, y: 4.31}
-    newSize: {x: 2.45, y: 4.31}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.608, y: 0.808}
+    newSize: {x: 3.125, y: 1.71875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.45, y: 4.31}
+  m_Size: {x: 0.73104143, y: 0.8092524}
   m_EdgeRadius: 0
 --- !u!114 &551116728
 MonoBehaviour:
@@ -655,6 +658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBattle
   health: {fileID: 0}
   stat: {fileID: 0}
+  atkCool: 0
   defaultAttack:
     offset: {x: 0, y: 0}
     size: {x: 5, y: 2}
@@ -677,6 +681,70 @@ MonoBehaviour:
   health: 0
   maxHealth: 5
   isDeath: 0
+--- !u!114 &551116730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551116719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea4f8667b2ebb9448f78ea7d15526ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityStat
+  defaultStat:
+  - Key: attackDamage
+    Value: 3
+  - Key: defense
+    Value: 0
+  - Key: increaseDamage
+    Value: 0
+  - Key: critPer
+    Value: 0
+  - Key: critMul
+    Value: 3
+  - Key: hurtDamage
+    Value: 0
+  - Key: atkSpeed
+    Value: 0
+  - Key: moveSpeed
+    Value: 10
+--- !u!95 &551116731
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551116719}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b3dce356d849adf47898075422e34df4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &551116732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551116719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25210dcc00531e4c837607592a77876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  direction: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +842,8 @@ GameObject:
   - component: {fileID: 1297270898}
   - component: {fileID: 1297270897}
   - component: {fileID: 1297270901}
+  - component: {fileID: 1297270902}
+  - component: {fileID: 1297270903}
   m_Layer: 6
   m_Name: enemy
   m_TagString: Untagged
@@ -891,7 +961,7 @@ Transform:
   m_GameObject: {fileID: 1297270896}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.68, y: 1.14, z: 0}
+  m_LocalPosition: {x: -4.48, y: 0.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -943,6 +1013,65 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3, y: 4}
   m_EdgeRadius: 0
+--- !u!114 &1297270902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297270896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea4f8667b2ebb9448f78ea7d15526ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityStat
+  defaultStat:
+  - Key: attackDamage
+    Value: 1
+  - Key: defense
+    Value: 0
+  - Key: increaseDamage
+    Value: 0
+  - Key: critPer
+    Value: 0
+  - Key: critMul
+    Value: 3
+  - Key: hurtDamage
+    Value: 2
+  - Key: atkSpeed
+    Value: 4
+  - Key: moveSpeed
+    Value: 3
+--- !u!114 &1297270903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297270896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da28a773cf2ae8e4dbe9d03712d9fab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Boss
+  health: {fileID: 0}
+  stat: {fileID: 0}
+  rigid: {fileID: 0}
+  direction: 0
+  atkCool: 1
+  groundMask_:
+    serializedVersion: 2
+    m_Bits: 128
+  groundDist_: 0.5
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 8
+  player: {fileID: 551116723}
+  attackDist: 7
+  defaultAttack:
+    offset: {x: 0, y: 0}
+    size: {x: 7, y: 5}
+    drawGizmos: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
