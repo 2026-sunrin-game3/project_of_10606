@@ -18,12 +18,14 @@ public class PlayerMovement : MonoBehaviour
         stat = GetComponent<EntityStat>();
     }
 
+
     public void Move(Vector2 axis)
     {
         float moveSpeed = stat.GetResultValue("moveSpeed");
         transform.Translate(axis.normalized * moveSpeed * Time.deltaTime);
     }
 
+    
     public void SetVelocity(Vector2 dir)
     {
         rigid.linearVelocity = dir;

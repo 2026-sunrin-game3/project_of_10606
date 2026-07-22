@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Boss : Enemy
 {
     [SerializeField]
@@ -26,6 +26,8 @@ public class Boss : Enemy
 
     bool inPattern;
 
+    [SerializeField] Slider bossbar;
+
     void Awake()
     {
         // 스폰하자마자 패턴이 터지지 않도록 쿨타임을 채워둔 채로 시작
@@ -36,6 +38,8 @@ public class Boss : Enemy
     // Update is called once per frame
     protected override void MobUpdate()
     {
+        bossbar.value = health.health / health.maxHealth;
+
         if (dashCool > 0)
             dashCool -= Time.deltaTime;
         if (jumpCool > 0)

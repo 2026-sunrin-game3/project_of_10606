@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 [System.Serializable]
     public struct AttackRange
@@ -25,6 +27,7 @@ public class PlayerBattle : MonoBehaviour
     [SerializeField] LayerMask enemyMask;
     [SerializeField] float dashPower, dashTime;//<--------------------니얼굴 윤겔라
     [SerializeField] DamageIndicator indicator;
+    [SerializeField] Slider playerhealth;
     public bool inDash;
     void Start()
     {
@@ -50,6 +53,7 @@ public class PlayerBattle : MonoBehaviour
 
     void Update()
     {
+        playerhealth.value = health.health / health.maxHealth;
         if (atkCool > 0) atkCool -= Time.deltaTime + (1 + stat.GetResultValue("atkSpeed")/100);
     }
 
@@ -85,6 +89,11 @@ public class PlayerBattle : MonoBehaviour
                 hp.GetDamage(stat.GetResultValue("attackDamage"), health);
             }
         }
+    }
+    
+    public void Crouch()
+    {
+
     }
     
     public void Skill_1()

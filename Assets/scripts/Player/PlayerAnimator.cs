@@ -1,4 +1,7 @@
+using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Assemblies;
+using UnityEngine.InputSystem;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -9,6 +12,14 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         stat = GetComponent<EntityStat>();
+    }
+    void Update()
+    {
+        if (Keyboard.current.sKey.isPressed)
+        {
+            animator.SetBool("isShift", true);
+        }
+        else animator.SetBool("isShift", false);
     }
 
     public void SetMoving(bool val, Vector2 axis)
@@ -41,5 +52,10 @@ public class PlayerAnimator : MonoBehaviour
     public void Play(string id)
     {
         animator.Play(id);
+    }
+
+    public void Crouch(bool shift)
+    {
+        animator.SetBool("isShift", true); 
     }
 }

@@ -5,6 +5,7 @@ public class PlayerInput : MonoBehaviour
 {
     PlayerMovement movement;
     PlayerAnimator animator;
+    Animator anime;
     PlayerBattle battle;
     public Vector2 axis;
     void Awake()
@@ -30,7 +31,7 @@ public class PlayerInput : MonoBehaviour
     public void OnAttack()
     {
         battle.Attack();
-        animator.Play("Attack1");
+        animator.Play("entrybot_attack");
     }
 
     public void OnDash()
@@ -42,4 +43,12 @@ public class PlayerInput : MonoBehaviour
     {
         battle.Skill_1();
     }
+
+    /*public void OnCrouch()
+    {
+        //anime.SetBool("isShift",true);
+        //Debug.Log("앙기모");
+        animator.Crouch(true);
+    
+    }*/
 }
