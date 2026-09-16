@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public bool Jump()
     {
-        if (OnGrounded())
+        if (OnGrounded()&&!Keyboard.current.sKey.isPressed)
         {
             SetVelocity(Vector2.up * jumpPower);
 

@@ -3,16 +3,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
+    
     PlayerMovement movement;
     PlayerAnimator animator;
     Animator anime;
+    BoxCollider2D boxCollider;
     PlayerBattle battle;
+    AudioSource audioSource;
     public Vector2 axis;
+    [SerializeField] AudioClip attackSfx;
+    [SerializeField] AudioClip dashSfx;
     void Awake()
     {
         movement = GetComponent<PlayerMovement>();
         battle = GetComponent<PlayerBattle>();
         animator = GetComponent<PlayerAnimator>();
+        audioSource = GetComponent<AudioSource>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
     public void OnMove(InputValue value)
     {
@@ -30,12 +37,15 @@ public class PlayerInput : MonoBehaviour
     }
     public void OnAttack()
     {
+        
         battle.Attack();
+        audioSource.PlayOneShot(attackSfx);
         animator.Play("entrybot_attack");
     }
 
     public void OnDash()
     {
+        audioSource.PlayOneShot(dashSfx);
         battle.Dash((int)animator.direction);
     }
 
@@ -44,11 +54,11 @@ public class PlayerInput : MonoBehaviour
         battle.Skill_1();
     }
 
-    /*public void OnCrouch()
+    public void OnCrouch()
     {
         //anime.SetBool("isShift",true);
         //Debug.Log("앙기모");
         animator.Crouch(true);
     
-    }*/
+    }
 }

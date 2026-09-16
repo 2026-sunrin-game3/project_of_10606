@@ -21,7 +21,9 @@ public class PlayerBattle : MonoBehaviour
     public float atkCool;
     public float Skill_1_Cool;
 
+    Shoot shoot;
 
+    SpriteRenderer spriteRenderer;
     public AttackRange defaultAttack;
 
     [SerializeField] LayerMask enemyMask;
@@ -34,8 +36,9 @@ public class PlayerBattle : MonoBehaviour
         health = GetComponent<EntityHealth>();
         stat = GetComponent<EntityStat>();
         movement = GetComponent<PlayerMovement>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
         health.OnDamage(OnHurt);
+        shoot = GetComponent<Shoot>();
     }
 
     void OnHurt(EntityHealth.Context ctx)
@@ -49,8 +52,17 @@ public class PlayerBattle : MonoBehaviour
             return;
         }
         indicator.IndicateDamage(ctx.damage, transform.position + new Vector3(0, 1), Color.red);
+        StartCoroutine(HurtFlash());
     }
 
+    IEnumerator HurtFlash()
+    {
+        spriteRenderer.color = new Color32(255, 150, 150, 255);
+
+        yield return new WaitForSeconds(0.1f);
+
+        spriteRenderer.color = Color.white;
+    }
     void Update()
     {
         playerhealth.value = health.health / health.maxHealth;
@@ -75,22 +87,18 @@ public class PlayerBattle : MonoBehaviour
     // Update is called once per frame
     public void Attack()
     {
+        Debug.Log("공격 시도");
         if (atkCool > 0)
             return;
+
         atkCool = 0.5f;
 
-        var col = Physics2D.OverlapBoxAll((Vector2)transform.position + defaultAttack.offset,defaultAttack.size,0,enemyMask);
-
-        foreach (var target in col)
+        if (shoot != null)
         {
-            EntityHealth hp = target.GetComponent<EntityHealth>();
-            if (hp != null)
-            {
-                hp.GetDamage(stat.GetResultValue("attackDamage"), health);
-            }
+            shoot.ShootBullet();
         }
     }
-    
+
     public void Crouch()
     {
 

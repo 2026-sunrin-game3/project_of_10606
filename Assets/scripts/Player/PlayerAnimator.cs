@@ -1,4 +1,4 @@
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Assemblies;
 using UnityEngine.InputSystem;
@@ -7,19 +7,26 @@ public class PlayerAnimator : MonoBehaviour
 {
     Animator animator;
     EntityStat stat;
+    BoxCollider2D boxcollider;
     public float direction;
     void Start()
     {
         animator = GetComponent<Animator>();
         stat = GetComponent<EntityStat>();
+        boxcollider = GetComponent<BoxCollider2D>();
     }
     void Update()
     {
         if (Keyboard.current.sKey.isPressed)
         {
             animator.SetBool("isShift", true);
+            boxcollider.size = new Vector2(0.7f, 0.4f);
         }
-        else animator.SetBool("isShift", false);
+        else
+        {
+            animator.SetBool("isShift", false);
+            boxcollider.size = new Vector2(0.7f, 0.8f);
+        }
     }
 
     public void SetMoving(bool val, Vector2 axis)

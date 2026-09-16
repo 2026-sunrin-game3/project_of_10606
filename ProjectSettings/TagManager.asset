@@ -13,9 +13,9 @@ TagManager:
   - UI
   - enemy
   - ground
-  - 
-  - 
-  - 
+  - bullet
+  - wall
+  - platform
   - 
   - 
   - 

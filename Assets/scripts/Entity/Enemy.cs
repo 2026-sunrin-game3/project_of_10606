@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    SpriteRenderer spriteRenderer;
     public EntityHealth health;
     public EntityStat stat;
     public Rigidbody2D rigid;
@@ -9,16 +11,22 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] LayerMask groundMask_;
     [SerializeField] float groundDist_ = 0.5f;
     public float atkCool;
+    public Animator animator;
+    public BoxCollider2D boxCollider;
     [SerializeField] LayerMask enemyMask;
     [SerializeField] DamageIndicator indicator;
+    
+    
     void Start()
     {
+        animator = GetComponent<Animator>();
         health = GetComponent<EntityHealth>();
         stat = GetComponent<EntityStat>();
         rigid = GetComponent<Rigidbody2D>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
         health.OnDamage(OnHurt);
         health.OnDeath(OnDeath);
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     void OnDeath(EntityHealth.Context ctx)
@@ -28,8 +36,20 @@ public abstract class Enemy : MonoBehaviour
 
     void OnHurt(EntityHealth.Context ctx)
     {
-        indicator.IndicateDamage(ctx.damage, transform.position + new Vector3(Random.Range(-0.3f, 0.3f), 1), Color.orange);
+        
+        //indicator.IndicateDamage(ctx.damage, transform.position + new Vector3(Random.Range(-1f, -0.3f), 1), Color.orange);
+        StartCoroutine(HurtFlash());
     }
+
+    IEnumerator HurtFlash()
+    {
+        spriteRenderer.color = new Color32(255,219,219,255);
+
+        yield return new WaitForSeconds(0.1f);
+
+        spriteRenderer.color = Color.white;
+    }
+
 
     void Update()
     {
